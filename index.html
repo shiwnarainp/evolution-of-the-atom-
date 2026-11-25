@@ -12,21 +12,56 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: a night-time science museum. A glowing timeline of five galleries is the main navigation; each gallery pairs an exhibit (the model) with a hands-on bench (the experiment). Labs and the final check follow the galleries. Deliberately single dark theme. */
+/* Layout: a night-time science museum. A glowing timeline of five galleries is the main navigation; each gallery pairs an exhibit (the model) with a hands-on bench (the experiment). Labs and the final check follow the galleries.
+   Themes: dark "night museum" on bare :root; light "daytime museum" (cool light neutrals, navy ink, deepened amber) via prefers-color-scheme or [data-theme="light"].
+   Experiment canvases keep a dark instrument screen in both themes (phosphor glow and spectra read best on black).
+   Particle colors: protons red, neutrons blue, electrons grey (light grey on dark, near-black in light). */
 :root{
   color-scheme:dark;
   --bg:#0a1120; --bg2:#0e1729; --panel:#121d33; --panel2:#18253f; --ink:#e9eef7; --muted:#9aa8c0; --line:#26354f;
   --accent:#f6b84a; --accent-ink:#1b1204; --accent-glow:rgba(246,184,74,.28);
   --pro:#ff5a5f; --neu:#4f8dff; --ele:#c3cbd8; --pos:#f08aa8; --gold:#e8c35a;
   --ok:#4fd18b; --ok-soft:#123222; --no:#ff7b7b; --no-soft:#3a1a1f; --warn-soft:#3a2d12;
+  --bg-glow:#16274a; --stage-glow:#1b2b4b; --shadow:rgba(0,0,0,.5);
+  --ele-edge:#0a1120; --ele-ink:#0a1120; --orbit:rgba(195,203,216,.45); --orbit-faint:rgba(195,203,216,.33); --cloud:rgba(195,203,216,.55);
+  --nuc-label:#ffb3b5; --th-plus:#ffe1eb; --tube-fill:rgba(120,160,255,.06); --tube-line:rgba(170,200,255,.5);
+  --beam:#7dffb0; --screen-ring:rgba(120,255,170,.35); --alpha:#ffd27a; --src:#55606f;
+  --instrument:#050a14; --instrument-deep:#03060c;
   --display:"Outfit",ui-sans-serif,system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --r:12px;
 }
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#eef2f7; --bg2:#e5ebf3; --panel:#ffffff; --panel2:#f4f7fb; --ink:#14213d; --muted:#4f5d75; --line:#cbd5e2;
+    --accent:#9a5b00; --accent-ink:#ffffff; --accent-glow:rgba(154,91,0,.16);
+    --pro:#e0383e; --neu:#2f6fe0; --ele:#2b3240; --pos:#d9668a; --gold:#b8901f;
+    --ok:#17804a; --ok-soft:#dcf3e6; --no:#c42b2b; --no-soft:#fbe3e3; --warn-soft:#fbefd6;
+    --bg-glow:#d5e1f4; --stage-glow:#ffffff; --shadow:rgba(20,33,61,.18);
+    --ele-edge:#f4f7fb; --ele-ink:#ffffff; --orbit:rgba(43,58,85,.5); --orbit-faint:rgba(43,58,85,.38); --cloud:rgba(43,50,64,.5);
+    --nuc-label:#b42318; --th-plus:#7a1d40; --tube-fill:rgba(47,90,170,.07); --tube-line:rgba(47,90,170,.6);
+    --beam:#13915a; --screen-ring:rgba(19,145,90,.4); --alpha:#b26b00; --src:#55606f;
+    --instrument:#050a14; --instrument-deep:#03060c;
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#eef2f7; --bg2:#e5ebf3; --panel:#ffffff; --panel2:#f4f7fb; --ink:#14213d; --muted:#4f5d75; --line:#cbd5e2;
+  --accent:#9a5b00; --accent-ink:#ffffff; --accent-glow:rgba(154,91,0,.16);
+  --pro:#e0383e; --neu:#2f6fe0; --ele:#2b3240; --pos:#d9668a; --gold:#b8901f;
+  --ok:#17804a; --ok-soft:#dcf3e6; --no:#c42b2b; --no-soft:#fbe3e3; --warn-soft:#fbefd6;
+  --bg-glow:#d5e1f4; --stage-glow:#ffffff; --shadow:rgba(20,33,61,.18);
+  --ele-edge:#f4f7fb; --ele-ink:#ffffff; --orbit:rgba(43,58,85,.5); --orbit-faint:rgba(43,58,85,.38); --cloud:rgba(43,50,64,.5);
+  --nuc-label:#b42318; --th-plus:#7a1d40; --tube-fill:rgba(47,90,170,.07); --tube-line:rgba(47,90,170,.6);
+  --beam:#13915a; --screen-ring:rgba(19,145,90,.4); --alpha:#b26b00; --src:#55606f;
+  --instrument:#050a14; --instrument-deep:#03060c;
+  color-scheme:light;
+}
+html{background-color:var(--bg)}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{background:radial-gradient(1200px 600px at 70% -10%,#16274a 0%,transparent 60%),var(--bg);background-color:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
+body{background:radial-gradient(1200px 600px at 70% -10%,var(--bg-glow) 0%,transparent 60%),var(--bg);background-color:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px;min-height:100%}
 .wrap{max-width:1160px;margin:0 auto}
 h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.01em}
@@ -109,7 +144,7 @@ main section{display:grid;gap:18px;margin-top:22px}
 .badge.lock{color:var(--muted)}
 .facts{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.95rem}
 .facts dt{color:var(--muted)} .facts dd{margin:0;font-weight:700}
-.stage{background:radial-gradient(circle at 50% 45%,#1b2b4b,var(--bg2) 72%);border:1px solid var(--line);border-radius:var(--r);display:grid;place-items:center;padding:8px;position:relative;touch-action:none}
+.stage{background:radial-gradient(circle at 50% 45%,var(--stage-glow),var(--bg2) 72%);border:1px solid var(--line);border-radius:var(--r);display:grid;place-items:center;padding:8px;position:relative;touch-action:none}
 .stage svg.model{width:100%;max-width:340px;height:auto;cursor:grab}
 .stage svg.model:active{cursor:grabbing}
 .caption{font-size:.84rem;color:var(--muted)}
@@ -131,7 +166,7 @@ fieldset.mc legend{font-weight:700;padding:0 6px}
 .opt input{margin-top:5px;accent-color:var(--accent);flex:none}
 
 /* canvases */
-canvas.sim{width:100%;height:auto;display:block;border-radius:var(--r);border:1px solid var(--line);background:#050a14}
+canvas.sim{width:100%;height:auto;display:block;border-radius:var(--r);border:1px solid var(--line);background:var(--instrument)}
 .ctrlrow{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
 .ctrlrow label{display:flex;gap:8px;align-items:center}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
@@ -214,7 +249,7 @@ canvas.sim{width:100%;height:auto;display:block;border-radius:var(--r);border:1p
 .qchips{display:flex;flex-wrap:wrap;gap:6px}
 .qchips button{width:40px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);cursor:pointer;font-family:var(--mono);font-weight:700}
 .qchips button.ok{color:var(--ok);border-color:var(--ok)} .qchips button.no{color:var(--no);border-color:var(--no)} .qchips button.cr{color:var(--accent);border-color:var(--accent)}
-.vocab{position:fixed;top:0;right:0;bottom:0;width:min(380px,92vw);z-index:30;background:var(--panel);border-left:1px solid var(--line);box-shadow:-10px 0 40px rgba(0,0,0,.5);overflow:auto;
+.vocab{position:fixed;top:0;right:0;bottom:0;width:min(380px,92vw);z-index:30;background:var(--panel);border-left:1px solid var(--line);box-shadow:-10px 0 40px var(--shadow);overflow:auto;
   padding:calc(18px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) 18px;display:grid;gap:10px;align-content:start}
 .vocab dl{display:grid;gap:8px;margin:0} .vocab dt{font-weight:700;color:var(--accent)} .vocab dd{margin:0 0 4px}
 .starter{font-size:.88rem;color:var(--muted);font-style:italic}
@@ -241,6 +276,7 @@ body.still *{animation:none!important;transition:none!important}
       <option value="1">Beginning</option><option value="2">Developing</option><option value="3">Approaching</option><option value="4">Proficient</option>
     </select>
     <button class="btn ghost sm" id="motionBtn" aria-pressed="false">Reduce motion: off</button>
+    <button class="btn ghost sm" id="themeBtn" type="button" aria-label="Color theme: Auto (follows your device). Activate to switch to Light.">Theme: Auto</button>
     <button class="btn ghost sm" id="vocabBtn" aria-expanded="false" aria-controls="vocab">Vocabulary</button>
   </div>
 </div></header>
@@ -283,6 +319,7 @@ body.still *{animation:none!important;transition:none!important}
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rand=Math.random,PI=Math.PI;
+const tok=(n,f='#050a14')=>{try{return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||f}catch(e){return f}};
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
 /* ---------- state ---------- */
@@ -317,18 +354,18 @@ function daltonSVG(yaw=0,pitch=.35,o={}){const id='dg'+(gid++),R=110;
 const TH_POS=[];const TH_EL=[];(function(){let s=7;const r=()=>{s=(s*9301+49297)%233280;return s/233280};for(let i=0;i<26;i++){const u=r()*2-1,t=r()*2*PI,rr=.85*Math.cbrt(r());TH_POS.push([rr*Math.sqrt(1-u*u)*Math.cos(t),rr*u,rr*Math.sqrt(1-u*u)*Math.sin(t)])}
   for(let i=0;i<11;i++){const u=r()*2-1,t=r()*2*PI,rr=.25+.55*Math.cbrt(r());TH_EL.push([rr*Math.sqrt(1-u*u)*Math.cos(t),rr*u,rr*Math.sqrt(1-u*u)*Math.sin(t)])}})();
 function thomsonSVG(yaw=0,pitch=.2,o={}){const id='tg'+(gid++),R=115;const items=[];
-  TH_POS.forEach(p=>{const[x,y,z]=rot(p.map(v=>v*R),yaw,pitch);items.push({z,s:`<text x="${x.toFixed(1)}" y="${(-y+5).toFixed(1)}" text-anchor="middle" font-size="${(13+z/R*4).toFixed(1)}" font-weight="700" fill="rgba(255,225,235,${(.35+.35*(z/R+1)/2).toFixed(2)})" font-family="IBM Plex Mono">+</text>`})});
-  TH_EL.forEach((p,i)=>{const[x,y,z]=rot(p.map(v=>v*R),yaw,pitch),r=(9+3*z/R).toFixed(1);items.push({z,s:`<g class="el" data-el="${i}" tabindex="-1"><circle cx="${x.toFixed(1)}" cy="${(-y).toFixed(1)}" r="${r}" fill="var(--ele)" stroke="#0a1120" stroke-width="1.5"/><text x="${x.toFixed(1)}" y="${(-y+4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#0a1120" font-family="IBM Plex Mono">−</text></g>`})});
+  TH_POS.forEach(p=>{const[x,y,z]=rot(p.map(v=>v*R),yaw,pitch);items.push({z,s:`<text x="${x.toFixed(1)}" y="${(-y+5).toFixed(1)}" text-anchor="middle" font-size="${(13+z/R*4).toFixed(1)}" font-weight="700" fill="var(--th-plus)" fill-opacity="${(.35+.35*(z/R+1)/2).toFixed(2)}" font-family="IBM Plex Mono">+</text>`})});
+  TH_EL.forEach((p,i)=>{const[x,y,z]=rot(p.map(v=>v*R),yaw,pitch),r=(9+3*z/R).toFixed(1);items.push({z,s:`<g class="el" data-el="${i}" tabindex="-1"><circle cx="${x.toFixed(1)}" cy="${(-y).toFixed(1)}" r="${r}" fill="var(--ele)" stroke="var(--ele-edge)" stroke-width="1.5"/><text x="${x.toFixed(1)}" y="${(-y+4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ele-ink)" font-family="IBM Plex Mono">−</text></g>`})});
   items.sort((a,b)=>a.z-b.z);
   return `<svg viewBox="-150 -150 300 300" class="${o.cls||''}" role="img" aria-label="Thomson plum pudding model: a sphere of spread-out positive charge with negative electrons embedded in it"><defs><radialGradient id="${id}" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f6a9c0" stop-opacity=".75"/><stop offset="1" stop-color="#9c3d63" stop-opacity=".55"/></radialGradient></defs><circle r="${R}" fill="url(#${id})" stroke="rgba(246,169,192,.6)"/>${items.map(i=>i.s).join('')}</svg>`}
 const RU_EL=[[.8,.1,.2],[-.6,.55,-.3],[.2,-.75,.4],[-.3,-.4,-.8],[.5,.6,.5],[-.85,-.2,.3]];
-function rutherfordSVG(yaw=0,pitch=.2,o={}){const R=125;let els='';RU_EL.forEach(p=>{const[x,y]=rot(p.map(v=>v*R),yaw,pitch);els+=`<g><circle cx="${x.toFixed(1)}" cy="${(-y).toFixed(1)}" r="7" fill="var(--ele)" stroke="#0a1120" stroke-width="1.5"/><text x="${x.toFixed(1)}" y="${(-y+4).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="700" fill="#0a1120" font-family="IBM Plex Mono">−</text></g>`});
-  return `<svg viewBox="-150 -150 300 300" class="${o.cls||''}" role="img" aria-label="Rutherford nuclear model: a tiny dense positive nucleus at the center, electrons outside, and mostly empty space"><circle r="${R}" fill="rgba(79,141,255,.04)" stroke="rgba(195,203,216,.35)" stroke-dasharray="4 5"/>
-  <circle r="14" fill="rgba(255,90,95,.18)"/><circle r="5" fill="var(--pro)"/>${o.labels!==false?`<text x="12" y="-14" font-size="11" fill="#ffb3b5" font-family="IBM Plex Mono">nucleus (+)</text><text y="${R+16}" text-anchor="middle" font-size="11" fill="#9aa8c0" font-family="IBM Plex Mono">mostly empty space</text>`:''}${els}</svg>`}
-function bohrIcon(o={}){let s='';[30,58,86].forEach(r=>s+=`<circle r="${r}" fill="none" stroke="rgba(195,203,216,.45)" stroke-width="1.5"/>`);
+function rutherfordSVG(yaw=0,pitch=.2,o={}){const R=125;let els='';RU_EL.forEach(p=>{const[x,y]=rot(p.map(v=>v*R),yaw,pitch);els+=`<g><circle cx="${x.toFixed(1)}" cy="${(-y).toFixed(1)}" r="7" fill="var(--ele)" stroke="var(--ele-edge)" stroke-width="1.5"/><text x="${x.toFixed(1)}" y="${(-y+4).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--ele-ink)" font-family="IBM Plex Mono">−</text></g>`});
+  return `<svg viewBox="-150 -150 300 300" class="${o.cls||''}" role="img" aria-label="Rutherford nuclear model: a tiny dense positive nucleus at the center, electrons outside, and mostly empty space"><circle r="${R}" fill="rgba(79,141,255,.04)" stroke="var(--orbit-faint)" stroke-dasharray="4 5"/>
+  <circle r="14" fill="rgba(255,90,95,.18)"/><circle r="5" fill="var(--pro)"/>${o.labels!==false?`<text x="12" y="-14" font-size="11" fill="var(--nuc-label)" font-family="IBM Plex Mono">nucleus (+)</text><text y="${R+16}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono">mostly empty space</text>`:''}${els}</svg>`}
+function bohrIcon(o={}){let s='';[30,58,86].forEach(r=>s+=`<circle r="${r}" fill="none" stroke="var(--orbit)" stroke-width="1.5"/>`);
   return `<svg viewBox="-110 -110 220 220" class="${o.cls||''}" role="img" aria-label="Bohr model: a nucleus with electrons in fixed circular energy levels">${s}<circle r="9" fill="var(--pro)"/><circle cx="58" cy="0" r="7" fill="var(--ele)"/><circle cx="-21" cy="-21" r="7" fill="var(--ele)"/><circle cx="0" cy="86" r="7" fill="var(--ele)"/></svg>`}
 const CLOUD=[];(function(){let s=3;const r=()=>{s=(s*16807)%2147483647;return s/2147483647};for(let i=0;i<700;i++){const rr=-.5*Math.log(r()*r()*r()+1e-9),u=r()*2-1,t=r()*2*PI;CLOUD.push([rr*Math.sqrt(1-u*u)*Math.cos(t),rr*u])}})();
-function modernIcon(o={}){let s='';CLOUD.forEach(([x,y])=>{if(Math.hypot(x,y)<3.4)s+=`<circle cx="${(x*30).toFixed(1)}" cy="${(y*30).toFixed(1)}" r="1.6" fill="rgba(195,203,216,.55)"/>`});
+function modernIcon(o={}){let s='';CLOUD.forEach(([x,y])=>{if(Math.hypot(x,y)<3.4)s+=`<circle cx="${(x*30).toFixed(1)}" cy="${(y*30).toFixed(1)}" r="1.6" fill="var(--cloud)"/>`});
   return `<svg viewBox="-110 -110 220 220" class="${o.cls||''}" role="img" aria-label="Modern electron cloud model: a probability cloud around a tiny nucleus">${s}<circle r="5" fill="var(--pro)"/></svg>`}
 const ICON={dalton:o=>daltonSVG(.4,.35,Object.assign({},o)),thomson:o=>thomsonSVG(.3,.2,o),rutherford:o=>rutherfordSVG(0,.2,Object.assign({labels:false},o)),bohr:bohrIcon,modern:modernIcon};
 
@@ -474,7 +511,7 @@ function V_thomson(){const m=MK.thomson,st=S.thomson,steps=st.steps,inv=steps.po
   ${nextBar('thomson')}</section>`}
 function crtGeom(){const sgn=crt.field,D=crt.strength*.32*sgn;const pts=[[70,160],[200,160],[330,160]];for(let i=1;i<=20;i++){const x=330+i*7.5,u=i/20;pts.push([x,160-D*u*u])}const slope=-2*D/150;for(let i=1;i<=10;i++){const x=480+i*26;pts.push([x,160-D+slope*(x-480)])}return pts}
 function drawCRT(){const cv=$('#crt');if(!cv)return;const c=cv.getContext('2d');c.setTransform(2,0,0,2,0,0);c.clearRect(0,0,800,320);
-  c.fillStyle='#050a14';c.fillRect(0,0,800,320);
+  c.fillStyle=tok('--instrument');c.fillRect(0,0,800,320);
   c.strokeStyle='rgba(170,200,255,.55)';c.lineWidth=2;c.fillStyle='rgba(120,160,255,.06)';c.beginPath();c.roundRect(40,95,720,130,60);c.fill();c.stroke();
   c.fillStyle='#8d9ab3';c.fillRect(56,135,10,50);c.fillStyle='#c3cbd8';c.font='600 12px IBM Plex Mono, monospace';c.fillText('Cathode (−)',30,252);
   c.fillStyle='#8d9ab3';c.fillRect(196,120,8,32);c.fillRect(196,168,8,32);c.fillStyle='#c3cbd8';c.fillText('Anode (+)',168,252);
@@ -536,7 +573,7 @@ function V_rutherford(){const m=MK.rutherford,st=S.rutherford,f=st.fired,ready=f
 function gfTally(){const el=$('#gfTally');if(!el)return;const d=gf.mode==='actual'?S.rutherford.fired:S.rutherford.pred;
   el.innerHTML=`<div><span>Passed straight through (under 3°)</span><b>${d.pass}</b></div><div><span>Deflected (3° to 90°)</span><b>${d.small}</b></div><div><span>Scattered backward (over 90°)</span><b>${d.back}</b></div>`+`<p class="small muted" style="grid-column:1/-1">${gf.mode==='actual'?'Actual experiment':'Plum pudding prediction'} · ${d.n} alpha particles fired</p>`}
 function gfAngle(){if(gf.mode==='pudding')return rand()*1.2;const u=rand();if(u<.88)return rand()*2.5;if(u<.985)return 3+87*Math.pow(rand(),3);return 90+88*rand()}
-function gfDraw(){const cv=$('#gfc');if(!cv)return;const c=cv.getContext('2d');c.setTransform(2,0,0,2,0,0);c.fillStyle='#050a14';c.fillRect(0,0,800,420);
+function gfDraw(){const cv=$('#gfc');if(!cv)return;const c=cv.getContext('2d');c.setTransform(2,0,0,2,0,0);c.fillStyle=tok('--instrument');c.fillRect(0,0,800,420);
   const cx=470,cy=210,R=175;
   c.strokeStyle='rgba(120,255,170,.35)';c.lineWidth=10;c.beginPath();c.arc(cx,cy,R,PI+.2,PI-.2+2*PI);c.stroke();
   c.fillStyle='#9aa8c0';c.font='600 12px IBM Plex Mono, monospace';c.fillText('Fluorescent screen',cx+70,cy-R-10);
@@ -599,11 +636,11 @@ function V_bohr(){const m=MK.bohr,st=S.bohr,nl=['3','4','5','6'].filter(k=>st.li
    <div class="note ok"><b>Scientific conclusion:</b> Bohr introduced quantized electron energy levels and explained the hydrogen emission spectrum.</div>
    <div class="note lim"><b>Model limitation:</b> The Bohr model cannot accurately describe the detailed electron structure and spectra of atoms with many electrons.</div>`:'<p class="locknote">🔒 Emit all four visible lines to unlock the guided discovery questions.</p>'}
   ${nextBar('bohr')}</section>`}
-function bDraw(r,photon){const svg=$('#bSvg');if(!svg)return;let s='';for(let n=1;n<=6;n++){s+=`<circle r="${BR(n)}" fill="none" stroke="rgba(195,203,216,.32)" stroke-dasharray="3 4"/><text x="${BR(n)+3}" y="-4" font-size="11" fill="#9aa8c0" font-family="IBM Plex Mono">n=${n}</text>`}
+function bDraw(r,photon){const svg=$('#bSvg');if(!svg)return;let s='';for(let n=1;n<=6;n++){s+=`<circle r="${BR(n)}" fill="none" stroke="var(--orbit-faint)" stroke-dasharray="3 4"/><text x="${BR(n)+3}" y="-4" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono">n=${n}</text>`}
   s+=`<circle r="10" fill="var(--pro)"/><text y="4" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="IBM Plex Mono">+</text>`;
   if(photon){let d='';for(let i=0;i<=40;i++){const x=photon.x0+(photon.x1-photon.x0)*i/40,y=photon.y+Math.sin(i/40*PI*8)*6;d+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)}s+=`<path d="${d}" fill="none" stroke="${photon.c}" stroke-width="3"/><text x="${photon.x1}" y="${photon.y-12}" font-size="11" fill="${photon.c}" font-family="IBM Plex Mono" text-anchor="middle">${photon.lbl}</text>`}
-  s+=`<circle cx="0" cy="${-r}" r="8" fill="var(--ele)" stroke="#0a1120" stroke-width="1.5"/>`;svg.innerHTML=s}
-function bSpec(){const cv=$('#bSpec');if(!cv)return;const c=cv.getContext('2d');c.setTransform(2,0,0,2,0,0);c.fillStyle='#03060c';c.fillRect(0,0,800,100);
+  s+=`<circle cx="0" cy="${-r}" r="8" fill="var(--ele)" stroke="var(--ele-edge)" stroke-width="1.5"/>`;svg.innerHTML=s}
+function bSpec(){const cv=$('#bSpec');if(!cv)return;const c=cv.getContext('2d');c.setTransform(2,0,0,2,0,0);c.fillStyle=tok('--instrument-deep');c.fillRect(0,0,800,100);
   const X=l=>20+(l-380)/(720-380)*760;c.fillStyle='#9aa8c0';c.font='600 10px IBM Plex Mono, monospace';[400,450,500,550,600,650,700].forEach(l=>{c.fillRect(X(l),78,1,5);c.fillText(l,X(l)-9,95)});
   Object.keys(S.bohr.lines).forEach(k=>{const l=bCalc(+k,2).lam;c.fillStyle=wl2rgb(l);c.shadowColor=wl2rgb(l);c.shadowBlur=12;c.fillRect(X(l)-2,8,4,66);c.shadowBlur=0})}
 function bLog(){const el=$('#bLog');if(el)el.innerHTML=S.bohr.log.slice(-6).reverse().map(t=>`<div>${esc(t)}</div>`).join('')||'<div class="muted">Your transitions will be listed here.</div>'}
@@ -612,7 +649,7 @@ function bTransition(type,a,b){const msg=$('#bMsg');msg.className='fb';
   if(type==='emit'&&b>a){msg.className='fb no';msg.textContent='An electron emits energy only when it drops to a LOWER level. Pick a lower final level, or use Absorb energy.';return}
   if(type==='abs'&&b<a){msg.className='fb no';msg.textContent='Absorbing energy moves an electron to a HIGHER level. Pick a higher final level, or use Emit energy.';return}
   if(bohr.n!==a){msg.className='fb no';msg.textContent=`The electron is on n = ${bohr.n} right now. Set “From” to ${bohr.n}.`;return}
-  const r=bCalc(a,b),col=r.vis?wl2rgb(r.lam):'#c3cbd8',lbl=(r.vis?'':r.reg.toUpperCase()+' · ')+r.lam.toFixed(0)+' nm';S.bohr.last=[type,a,b];
+  const r=bCalc(a,b),col=r.vis?wl2rgb(r.lam):'var(--muted)',lbl=(r.vis?'':r.reg.toUpperCase()+' · ')+r.lam.toFixed(0)+' nm';S.bohr.last=[type,a,b];
   const finish=()=>{bohr.n=b;$('#bFrom').value=b;bohr.anim=null;
     const line=`${type==='emit'?'Emitted':'Absorbed'} n=${a}→${b}: ΔE = ${r.dE.toFixed(2)} eV, λ = ${r.lam.toFixed(0)} nm (${r.vis?colorName(r.lam)+' visible light':r.reg})`;S.bohr.log.push(line);
     if(type==='emit'&&b===2&&a>=3&&a<=6){const first=!S.bohr.lines[a];S.bohr.lines[a]=true;msg.className='fb ok';msg.textContent=`Bright line at ${r.lam.toFixed(0)} nm (${colorName(r.lam)}).${first?' New line added to the spectrum.':''}`;save();if(first&&Object.keys(S.bohr.lines).length===4){setTimeout(()=>show('bohr'),700)}}
@@ -670,20 +707,20 @@ function V_modern(){const m=MK.modern,st=S.modern;
   ${nextBar('modern')}</section>`}
 function mFeedback(){const t=S.modern.text;return `<div class="stack"><p class="small muted">Feedback checks your answer for key ideas. It is a guide, not a grade.</p><div class="rubric">${writeFeedback(t,[['Probability',['probab','likely','chance'],'mention that the model gives the probability of finding an electron'],['Orbitals or regions',['orbital','region','cloud'],'name orbitals or regions where electrons are likely'],['No fixed paths',['fixed','path','circular','orbit','exact'],'contrast with Bohr’s fixed circular orbits'],['Evidence',['evidence','experiment','spectr','many electron','many-electron','measure','observ'],'name evidence, such as spectra of many-electron atoms']])}</div>
   <div class="note ok"><b>Example of a strong answer:</b> The modern model is more accurate because it describes electrons with orbitals, regions where an electron is likely to be found, instead of fixed circular paths. Bohr’s model only matched hydrogen’s spectrum, but the modern model also predicts the spectra and behavior of atoms with many electrons.</div></div>`}
-function mDraw(){const cv=$('#mc');if(!cv)return;const c=cv.getContext('2d'),W=500;c.setTransform(2,0,0,2,0,0);c.fillStyle='#050a14';c.fillRect(0,0,W,W);
+function mDraw(){const cv=$('#mc');if(!cv)return;const c=cv.getContext('2d'),W=500;c.setTransform(2,0,0,2,0,0);c.fillStyle=tok('--instrument');c.fillRect(0,0,W,W);
   const sc=cloud.orb==='1s'?58:20,cx=W/2,cy=W/2,a=cloud.alpha/100;
   c.fillStyle=`rgba(195,203,216,${(.08+.5*a).toFixed(3)})`;for(let i=0;i<Math.min(cloud.dens,cloud.pts.length);i++){const[x,y]=rot(cloud.pts[i],cloud.yaw,cloud.pitch);c.fillRect(cx+x*sc-1,cy-y*sc-1,2,2)}
   c.fillStyle='#ff5a5f';c.beginPath();c.arc(cx,cy,4,0,7);c.fill();
   cloud.meas.forEach((p,i)=>{const[x,y]=rot(p,cloud.yaw,cloud.pitch);const last=i===cloud.meas.length-1;c.fillStyle=last?'#fff3c4':'#f6b84a';c.beginPath();c.arc(cx+x*sc,cy-y*sc,last?5:2.8,0,7);c.fill();if(last){c.strokeStyle='#f6b84a';c.lineWidth=1.5;c.beginPath();c.arc(cx+x*sc,cy-y*sc,11,0,7);c.stroke()}});
   c.fillStyle='#9aa8c0';c.font='600 11px IBM Plex Mono, monospace';c.fillText(cloud.orb==='1s'?'Hydrogen 1s orbital':'2p orbital (one of three)',12,20);
   c.strokeStyle='#9aa8c0';c.beginPath();c.moveTo(12,W-18);c.lineTo(12+sc,W-18);c.stroke();c.fillText('1 Bohr radius (53 pm)',12,W-24)}
-function mHist(){const cv=$('#mh');if(!cv)return;const c=cv.getContext('2d');c.setTransform(2,0,0,2,0,0);c.fillStyle='#050a14';c.fillRect(0,0,800,150);
+function mHist(){const cv=$('#mh');if(!cv)return;const c=cv.getContext('2d');c.setTransform(2,0,0,2,0,0);c.fillStyle=tok('--instrument');c.fillRect(0,0,800,150);
   const rmax=cloud.orb==='1s'?5:14,B=25,bins=new Array(B).fill(0);cloud.meas.forEach(p=>{const r=Math.hypot(...p),k=Math.floor(r/rmax*B);if(k<B)bins[k]++});
   const n=cloud.meas.length||1,X=r=>40+r/rmax*740,bw=740/B,pdf=r=>cloud.orb==='1s'?4*r*r*Math.exp(-2*r):Math.pow(r,4)*Math.exp(-r)/24;
   let maxD=0;for(let r=0;r<rmax;r+=rmax/200)maxD=Math.max(maxD,pdf(r));const ymax=Math.max(maxD,...bins.map(b=>b/n/(rmax/B)))*1.1,Y=v=>128-v/ymax*110;
   c.fillStyle='rgba(246,184,74,.75)';bins.forEach((b,i)=>{const d=b/n/(rmax/B);c.fillRect(40+i*bw+1,Y(d),bw-2,128-Y(d))});
   c.strokeStyle='#c3cbd8';c.lineWidth=2;c.beginPath();for(let i=0;i<=200;i++){const r=i/200*rmax;i?c.lineTo(X(r),Y(pdf(r))):c.moveTo(X(r),Y(pdf(r)))}c.stroke();
-  c.fillStyle='#9aa8c0';c.font='600 10px IBM Plex Mono, monospace';for(let r=0;r<=rmax;r+=cloud.orb==='1s'?1:2){c.fillText(r,X(r)-3,144)}c.fillText('distance from nucleus (Bohr radii) →',520,144);c.fillRect(40,128,740,1);
+  c.fillStyle='#9aa8c0';c.font='600 10px IBM Plex Mono, monospace';for(let r=0;r<=rmax;r+=cloud.orb==='1s'?1:2){c.fillText(r,X(r)-3,144)}c.fillText('distance from nucleus (Bohr radii) →',530,14);c.fillRect(40,128,740,1);
   $('#mHcap').textContent=`Bars: your ${cloud.meas.length} measurements. Line: the probability predicted by quantum mechanics. Most likely distance: ${cloud.orb==='1s'?'1 Bohr radius (53 pm)':'4 Bohr radii'}.`;
   $('#mCount').textContent=`${S.modern.meas} measurements total`}
 function wire_modern(){const st=S.modern;const regen=()=>{cloud.pts=[];for(let i=0;i<6000;i++)cloud.pts.push(sample(cloud.orb))};if(!cloud.pts.length)regen();mDraw();mHist();
@@ -800,9 +837,9 @@ const DET=[
  {t:'text',clue:'This model said atoms could not be divided, but the discovery of the electron proved otherwise.',a:'dalton',ch:['dalton','thomson','rutherford','modern'],h:['Which model said atoms are indivisible?','It is the billiard ball model.']},
  {t:'text',clue:'Positive charge is concentrated in a tiny center, electrons are outside, and the atom is mostly empty space. Electron arrangement is not specified.',a:'rutherford',ch:['thomson','rutherford','bohr','modern'],h:['A tiny center: which experiment found it?','No energy levels yet, so it comes before Bohr.']}];
 function detVis(v){if(ICON[v])return ICON[v]();
-  if(v==='crt')return `<svg viewBox="0 0 200 120" role="img" aria-label="Cathode ray tube: a beam bends toward the positive plate"><rect x="8" y="30" width="184" height="60" rx="28" fill="rgba(120,160,255,.06)" stroke="rgba(170,200,255,.5)"/><rect x="88" y="38" width="44" height="4" fill="var(--pro)"/><rect x="88" y="78" width="44" height="4" fill="var(--neu)"/><text x="104" y="34" fill="var(--pro)" font-size="10" font-family="IBM Plex Mono">+ +</text><path d="M18 60 L88 60 Q120 58 132 50 L186 36" fill="none" stroke="#7dffb0" stroke-width="2.5" class="pulse"/></svg>`;
-  if(v==='foil')return `<svg viewBox="0 0 200 140" role="img" aria-label="Gold foil experiment: most particles pass through, a few bounce back"><circle cx="110" cy="70" r="60" fill="none" stroke="rgba(120,255,170,.35)" stroke-width="5"/><rect x="108" y="30" width="4" height="80" fill="var(--gold)"/><path d="M10 70H180" stroke="#ffd27a" stroke-width="1.5"/><path d="M10 64H110L168 40" stroke="#ffd27a" stroke-width="1.5" fill="none"/><path d="M10 76H110L58 112" stroke="#ff7b7b" stroke-width="1.5" fill="none"/><rect x="2" y="60" width="16" height="20" fill="#55606f"/></svg>`;
-  if(v==='jump')return `<svg viewBox="-80 -80 160 160" role="img" aria-label="Electron drops from a higher level to a lower level and gives off a photon"><circle r="28" fill="none" stroke="rgba(195,203,216,.45)"/><circle r="56" fill="none" stroke="rgba(195,203,216,.45)"/><circle r="7" fill="var(--pro)"/><circle cy="-28" r="6" fill="var(--ele)"/><circle cy="-56" r="6" fill="none" stroke="var(--ele)" stroke-dasharray="2 2"/><path d="M0 -50 L0 -36" stroke="var(--accent)" stroke-width="2" marker-end=""/><path d="M8 -28 q5 -6 10 0 t10 0 t10 0 t10 0" fill="none" stroke="#ff4b4b" stroke-width="2.5"/></svg>`;
+  if(v==='crt')return `<svg viewBox="0 0 200 120" role="img" aria-label="Cathode ray tube: a beam bends toward the positive plate"><rect x="8" y="30" width="184" height="60" rx="28" fill="var(--tube-fill)" stroke="var(--tube-line)"/><rect x="88" y="38" width="44" height="4" fill="var(--pro)"/><rect x="88" y="78" width="44" height="4" fill="var(--neu)"/><text x="104" y="34" fill="var(--pro)" font-size="10" font-family="IBM Plex Mono">+ +</text><path d="M18 60 L88 60 Q120 58 132 50 L186 36" fill="none" stroke="var(--beam)" stroke-width="2.5" class="pulse"/></svg>`;
+  if(v==='foil')return `<svg viewBox="0 0 200 140" role="img" aria-label="Gold foil experiment: most particles pass through, a few bounce back"><circle cx="110" cy="70" r="60" fill="none" stroke="var(--screen-ring)" stroke-width="5"/><rect x="108" y="30" width="4" height="80" fill="var(--gold)"/><path d="M10 70H180" stroke="var(--alpha)" stroke-width="1.5"/><path d="M10 64H110L168 40" stroke="var(--alpha)" stroke-width="1.5" fill="none"/><path d="M10 76H110L58 112" stroke="var(--no)" stroke-width="1.5" fill="none"/><rect x="2" y="60" width="16" height="20" fill="var(--src)"/></svg>`;
+  if(v==='jump')return `<svg viewBox="-80 -80 160 160" role="img" aria-label="Electron drops from a higher level to a lower level and gives off a photon"><circle r="28" fill="none" stroke="var(--orbit)"/><circle r="56" fill="none" stroke="var(--orbit)"/><circle r="7" fill="var(--pro)"/><circle cy="-28" r="6" fill="var(--ele)"/><circle cy="-56" r="6" fill="none" stroke="var(--ele)" stroke-dasharray="2 2"/><path d="M0 -50 L0 -36" stroke="var(--accent)" stroke-width="2" marker-end=""/><path d="M8 -28 q5 -6 10 0 t10 0 t10 0 t10 0" fill="none" stroke="#ff4b4b" stroke-width="2.5"/></svg>`;
   return ''}
 function V_detective(){const st=S.detective;if(!st.order){st.order=shuffle(DET.map((d,i)=>i));save()}
   const pos=Math.min(st.i,DET.length),done=Object.keys(st.res).length,first=Object.values(st.res).filter(v=>v===1).length;
@@ -922,6 +959,16 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#vocab').hidden
 let ua=0;$('#unlockBtn').onclick=e=>{if(S.unlock){S.unlock=false;save();e.target.textContent='Teacher: unlock all galleries';show(S.view);return}if(!ua){ua=1;e.target.textContent='Click again to unlock everything';setTimeout(()=>{ua=0;if(!S.unlock)e.target.textContent='Teacher: unlock all galleries'},3500);return}S.unlock=true;save();e.target.textContent='Teacher: re-lock galleries';refresh()};
 if(S.unlock)$('#unlockBtn').textContent='Teacher: re-lock galleries';
 applyMotion();
+/* theme: Auto -> Light -> Dark -> Auto */
+const hostTheme=document.documentElement.getAttribute('data-theme');
+const THEMES=['auto','light','dark'];let themePref='auto';
+try{const t=localStorage.getItem('theme-pref');if(THEMES.includes(t))themePref=t}catch(e){}
+const applyTheme=()=>{const r=document.documentElement;if(themePref==='auto'){if(hostTheme!=null)r.setAttribute('data-theme',hostTheme);else r.removeAttribute('data-theme')}else r.setAttribute('data-theme',themePref);
+  const cap=p=>p[0].toUpperCase()+p.slice(1),nx=THEMES[(THEMES.indexOf(themePref)+1)%3],b=$('#themeBtn');
+  b.textContent='Theme: '+cap(themePref);b.setAttribute('aria-label','Color theme: '+cap(themePref)+(themePref==='auto'?' (follows your device)':'')+'. Activate to switch to '+cap(nx)+'.')};
+$('#themeBtn').onclick=()=>{themePref=THEMES[(THEMES.indexOf(themePref)+1)%3];try{localStorage.setItem('theme-pref',themePref)}catch(e){}applyTheme();show(S.view)};
+try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if(themePref==='auto')show(S.view)})}catch(e){}
+applyTheme();
 const h0=location.hash.slice(1);show(V[h0]?h0:S.view);
 })();
 </script>
